@@ -9,7 +9,7 @@ function Contact() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(""); // success/error message
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -25,30 +25,33 @@ function Contact() {
 
     try {
       const response = await axios.post(
-        "https://web-development-project.onrender.com/contact", // ✅ FIXED URL
+        "https://web-development-project.onrender.com/contact",
         formData,
         {
           headers: {
             "Content-Type": "application/json",
           },
-          timeout: 10000, // ⏱ prevents hanging forever
+          timeout: 30000, // ✅ increased timeout
         }
       );
 
-      if (response.status === 200) {
+      // ✅ accept both 200 & 201
+      if (response.status === 200 || response.status === 201) {
         setStatus("✅ Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       }
+
     } catch (error) {
-      console.error(error);
+      console.error("❌ Axios Error:", error);
 
       if (error.response) {
         setStatus("❌ Server error: " + error.response.data.message);
       } else if (error.request) {
-        setStatus("❌ No response from server. Try again later.");
+        setStatus("❌ No response from server. Backend may be sleeping.");
       } else {
         setStatus("❌ Error: " + error.message);
       }
+
     } finally {
       setLoading(false);
     }
@@ -127,3 +130,4 @@ const buttonStyle = {
 };
 
 export default Contact;
+
