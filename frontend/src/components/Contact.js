@@ -1,119 +1,96 @@
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function Contact() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: ""
+  // 1. Create state to hold form data (matching your handleSubmit variable)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
   });
 
+  // State for button loading status
   const [loading, setLoading] = useState(false);
 
+  // 2. Update state as you type
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 3. Send data to your LIVE backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
-      setLoading(true);
-
-      await axios.post("https://web-development-projcet.onrender.com /contact", form);
-
+      // CHANGED: Added your specific Render URL and /contact endpoint
+      await axios.post("https://web-development-projcet.onrender.com/contact", formData);
+      
       alert("Message sent successfully!");
-
-      setForm({ name: "", email: "", message: "" });
+      
+      // Reset form
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error("Error sending message:", error);
       alert("Something went wrong!");
-      console.log(error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      id="contact"
-      style={{
-        padding: "60px 20px",
-        textAlign: "center",
-        backgroundColor: "#f5f5f5"
-      }}
-    >
-      <h2 style={{ marginBottom: "20px" }}>Contact Me</h2>
+    <div style={{ textAlign: "center", padding: "60px 20px", backgroundColor: "white" }}>
+      <h2>Contact Me</h2>
+      <p>📞 Phone: 1234567890</p>
+      <p>📧 Email: your@email.com</p>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          maxWidth: "400px",
-          margin: "auto",
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px"
-        }}
-      >
-        <input
-          type="text"
+      <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
+        <input 
           name="name"
-          placeholder="Your Name"
-          value={form.name}
+          value={formData.name}
           onChange={handleChange}
-          required
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc"
-          }}
+          placeholder="Name" 
+          style={inputStyle} 
+          required 
         />
-
-        <input
-          type="email"
+        <input 
           name="email"
-          placeholder="Your Email"
-          value={form.email}
+          value={formData.email}
           onChange={handleChange}
-          required
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc"
-          }}
+          placeholder="Email" 
+          style={inputStyle} 
+          required 
         />
-
-        <textarea
+        <textarea 
           name="message"
-          placeholder="Your Message"
-          value={form.message}
+          value={formData.message}
           onChange={handleChange}
-          required
-          rows="5"
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            resize: "none"
-          }}
+          placeholder="Message" 
+          style={{...inputStyle, height: '100px'}} 
+          required 
         />
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "none",
-            backgroundColor: "#333",
-            color: "white",
-            cursor: "pointer"
-          }}
-        >
-          {loading ? "Sending..." : "Send Message"}
+        <button type="submit" disabled={loading} style={{
+          padding: "10px 20px",
+          background: loading ? "#ccc" : "#007bff",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: loading ? "not-allowed" : "pointer"
+        }}>
+          {loading ? "Sending..." : "Send"}
         </button>
       </form>
     </div>
   );
 }
+
+const inputStyle = {
+  display: "block",
+  margin: "10px auto",
+  padding: "10px",
+  width: "250px",
+  borderRadius: "5px",
+  border: "1px solid #ccc"
+};
 
 export default Contact;
