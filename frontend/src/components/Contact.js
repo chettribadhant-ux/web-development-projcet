@@ -20,7 +20,7 @@ function Contact() {
     try {
       setLoading(true);
 
-      await axios.post("https://web-development-projcet.onrender.com", formdata);
+      await axios.post("https://web-development-projcet.onrender.com", form);
 
       alert("Message sent successfully!");
 
