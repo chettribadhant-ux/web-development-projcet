@@ -25,7 +25,7 @@ function Contact() {
 
     try {
       const response = await axios.post(
-        "https://web-development-project.onrender.com/contact",
+        "https://web-development-projcet.onrender.com/contact",
         formData,
         {
           headers: {
