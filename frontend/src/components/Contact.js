@@ -23,7 +23,7 @@ function Contact() {
     setLoading(true);
     try {
       // CHANGED: Added your specific Render URL and /contact endpoint
-      await axios.post("https://web-development-projcet.onrender.com/contact", formData);
+      await axios.post("https://web-development-projcet.onrender.com/contact", form);
       
       alert("Message sent successfully!");
       
