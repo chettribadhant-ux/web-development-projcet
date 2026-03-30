@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const Contact = require("./models/Contact");
+const Contact = require("./models/contact");
 
 const app = express();
 
