@@ -30,7 +30,7 @@ function Contact() {
       // Reset form
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error(error);
       alert("Something went wrong!");
     } finally {
       setLoading(false);
