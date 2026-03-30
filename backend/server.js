@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI)
 .catch(err => console.log("DB Error:", err));
 
 // API route
-app.post("/contact", async (req, res) => {
+app.post("/api/contact", async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
