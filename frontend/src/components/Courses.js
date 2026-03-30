@@ -1,18 +1,19 @@
 function Courses() {
+  const courses = [
+    "Full Stack Development",
+    "React Basics",
+    "JavaScript Advanced"
+  ];
+
   return (
-    <div id="courses" style={{ textAlign: "center", marginTop: "80px" }}>
-      
-      <h2 style={{ fontSize: "24px", fontWeight: "bold" }}>
-        Courses Completed
-      </h2>
-
-      <div style={{ marginTop: "20px" }}>
-        <p>✔ MERN Stack Development</p>
-        <p>✔ Python Programming</p>
-        <p>✔ HTML, CSS, JavaScript</p>
+    <section className="section">
+      <h2>Courses Completed</h2>
+      <div className="grid">
+        {courses.map((c, i) => (
+          <div key={i} className="card">{c}</div>
+        ))}
       </div>
-
-    </div>
+    </section>
   );
 }
 

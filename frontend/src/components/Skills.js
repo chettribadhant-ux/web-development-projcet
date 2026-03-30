@@ -1,18 +1,15 @@
 function Skills() {
+  const skills = ["HTML", "CSS", "JavaScript", "React", "Node.js"];
+
   return (
-    <div id="skills"  style={{ textAlign: "center", marginTop: "80px" }}>
-      
-      <h2 style={{ fontSize: "24px", fontWeight: "bold" }}>
-        Currently Developing Skills
-      </h2>
-
-      <div style={{ marginTop: "20px" }}>
-        <p>• Advanced React</p>
-        <p>• Backend Development</p>
-        <p>• MongoDB & API Design</p>
+    <section className="section">
+      <h2>Skills</h2>
+      <div className="grid">
+        {skills.map((s, i) => (
+          <div key={i} className="card">{s}</div>
+        ))}
       </div>
-
-    </div>
+    </section>
   );
 }
 

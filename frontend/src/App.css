@@ -1,38 +1,63 @@
-.App {
+.section {
+  padding: 80px 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  color: #38bdf8;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.grid {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  min-width: 150px;
+  transition: 0.3s;
+  text-decoration: none;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.card:hover {
+  transform: scale(1.05);
+  background: #334155;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Takes up the full screen height */
+  background-color: #000; /* Optional: dark background to make it pop */
+}
+
+.animated-text {
+  color: white;
+  font-size: 4rem; /* Large size */
+  font-weight: 800; /* Extra Bold */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  
+  /* Animation settings */
+  animation: fadeInSlide 2s ease-out forwards;
+}
+
+/* The Animation */
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(30px); /* Starts slightly lower */
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Moves to the center */
   }
 }
+

@@ -1,34 +1,36 @@
-function Hero() {
+import "./hero.css";
+
+function hero() {
   return (
-    <div id="home" style={{
-      textAlign: "center",
-      padding: "80px 20px",
-      backgroundColor: "white",
-      boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
-    }}>
-      
-      <img
-        src="/profile.jpg"
-        alt="profile"
-        style={{
-          width: "160px",
-          height: "160px",
-          borderRadius: "50%",
-          objectFit: "cover",
-          border: "3px solid #007bff"
-        }}
-      />
+    <div id="home" className="hero-container">
 
-      <h1 style={{ marginTop: "20px", fontSize: "32px" }}>
-        Hi, I'm Badhant
-      </h1>
+      {/* LEFT SIDE TEXT */}
+      <div className="hero-left">
+        <h1 className="hero-title">
+          WEB DEVELOPMENT PROJECT
+        </h1>
 
-      <p style={{ color: "#555", fontSize: "18px" }}>
-        Full Stack Developer
-      </p>
+        <p className="hero-subtitle">
+          I am a passionate Full Stack Developer building modern web applications.
+        </p>
+      </div>
+
+      {/* RIGHT SIDE IMAGE */}
+      <div className="hero-right">
+        <img
+          src="/profile.jpg"
+          alt="Profile"
+          className="hero-image"
+        />
+      </div>
 
     </div>
   );
 }
 
-export default Hero;
+export default hero;
+
+
+
+
+
