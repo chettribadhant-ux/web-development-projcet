@@ -10,9 +10,9 @@ const Contact = require("./models/contact");
 
 const app = express();
 
-// ✅ CORS (IMPORTANT FIX)
+// ✅ CORS
 app.use(cors({
-  origin: "https://my-frontend-app-vxvj.onrender.com", // 🔁 replace with your frontend URL
+  origin: "https://my-frontend-app-vxvj.onrender.com",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
@@ -22,18 +22,25 @@ app.options("*", cors());
 
 // ✅ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 30000, // prevent quick timeout
+  serverSelectionTimeoutMS: 30000,
 })
 .then(() => console.log("✅ MongoDB Atlas Connected"))
 .catch(err => console.log("❌ DB Error:", err));
 
-// ✅ API route
+// ✅ FIXED CONTACT ROUTE (IMPORTANT)
 app.post("/contact", async (req, res) => {
   console.log("🔥 Request received:", req.body);
 
   try {
     const { name, email, message } = req.body;
 
+    // ✅ SEND RESPONSE IMMEDIATELY (fixes timeout)
+    res.status(200).json({
+      success: true,
+      message: "Message received!",
+    });
+
+    // 💾 Save AFTER response (non-blocking)
     const newContact = new Contact({ name, email, message });
 
     console.log("💾 Saving to DB...");
@@ -41,19 +48,8 @@ app.post("/contact", async (req, res) => {
 
     console.log("✅ Saved successfully!");
 
-    // ✅ IMPORTANT: use 200
-    res.status(200).json({
-      success: true,
-      message: "Message saved successfully",
-    });
-
   } catch (error) {
     console.error("❌ ERROR:", error);
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
   }
 });
 

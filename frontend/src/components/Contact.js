@@ -36,7 +36,7 @@ function Contact() {
       );
 
       // ✅ accept both 200 & 201
-      if (response.status === 200 || response.status === 201) {
+      if (response.status === 200 || response.status === 200) {
         setStatus("✅ Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       }
