@@ -13,7 +13,7 @@ const app = express();
 // ✅ CORS
 app.use(cors({
   origin: "https://my-frontend-app-vxvj.onrender.com",
-  methods: ["GET", "POST", "OPTIONS"],
+  methods: ["GET", "POST", "PUT","DELETE"],
   allowedHeaders: ["Content-Type"],
 }));
 
