@@ -6,61 +6,67 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const Contact = require("./models/contact");
-
 const app = express();
 
-// ✅ CORS
+// ✅ CORS FIX (VERY IMPORTANT)
 app.use(cors({
-  origin: "https://my-frontend-app-vxvj.onrender.com",
-  methods: ["GET", "POST", "PUT","DELETE"],
-  allowedHeaders: ["Content-Type"],
+  origin: "*", // allow all (easy fix)
+  methods: ["GET", "POST"],
+  credentials: true
 }));
 
+// extra headers (fix for Render CORS)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
+
+// middleware
 app.use(express.json());
-app.options("*", cors());
 
-// ✅ MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 30000,
-})
-.then(() => console.log("✅ MongoDB Atlas Connected"))
-.catch(err => console.log("❌ DB Error:", err));
+// ✅ MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
-// ✅ FIXED CONTACT ROUTE (IMPORTANT)
+// ✅ Schema + Model
+const contactSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  message: String
+});
+
+const Contact = mongoose.model("Contact", contactSchema);
+
+// ✅ Routes
+app.get("/", (req, res) => {
+  res.send("API Running");
+});
+
 app.post("/contact", async (req, res) => {
-  console.log("🔥 Request received:", req.body);
-
   try {
     const { name, email, message } = req.body;
 
-    // ✅ SEND RESPONSE IMMEDIATELY (fixes timeout)
-    res.status(200).json({
-      success: true,
-      message: "Message received!",
+    const newContact = new Contact({
+      name,
+      email,
+      message
     });
 
-    // 💾 Save AFTER response (non-blocking)
-    const newContact = new Contact({ name, email, message });
-
-    console.log("💾 Saving to DB...");
     await newContact.save();
 
-    console.log("✅ Saved successfully!");
+    res.json({ success: true, message: "Data saved successfully" });
 
   } catch (error) {
-    console.error("❌ ERROR:", error);
+    console.log(error);
+    res.status(500).json({ error: "Error saving data" });
   }
 });
 
-// ✅ Test route
-app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
-});
-
-// ✅ Start server
+// ✅ Port (IMPORTANT for Render)
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT,'0.0.0.0',() => {
-  console.log(`🚀 Server running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
