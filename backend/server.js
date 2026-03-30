@@ -11,6 +11,11 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(cors({
+  origin: "https://my-frontend-app-vxvj.onrender.com",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+}));
 app.use(express.json());
 app.options('*',cors());
 
