@@ -1,96 +1,129 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 function Contact() {
-  // 1. Create state to hold form data (matching your handleSubmit variable)
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
 
-  // State for button loading status
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(""); // success/error message
 
-  // 2. Update state as you type
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  // 3. Send data to your LIVE backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setStatus("");
+
     try {
-      // CHANGED: Added your specific Render URL and /contact endpoint
-      await axios.post("https://web-development-projcet.onrender.com/contact", form);
-      
-      alert("Message sent successfully!");
-      
-      // Reset form
-      setFormData({ name: '', email: '', message: '' });
+      const response = await axios.post(
+        "https://web-development-project.onrender.com/contact", // ✅ FIXED URL
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          timeout: 10000, // ⏱ prevents hanging forever
+        }
+      );
+
+      if (response.status === 200) {
+        setStatus("✅ Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      }
     } catch (error) {
-      console.error("Error sending message",error);
-      alert("Something went wrong!");
+      console.error(error);
+
+      if (error.response) {
+        setStatus("❌ Server error: " + error.response.data.message);
+      } else if (error.request) {
+        setStatus("❌ No response from server. Try again later.");
+      } else {
+        setStatus("❌ Error: " + error.message);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "60px 20px", backgroundColor: "white" }}>
+    <div style={container}>
       <h2>Contact Me</h2>
-      <p>📞 Phone: 1234567890</p>
-      <p>📧 Email: your@email.com</p>
 
-      <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
-        <input 
+      <form onSubmit={handleSubmit}>
+        <input
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Name" 
-          style={inputStyle} 
-          required 
+          placeholder="Name"
+          style={inputStyle}
+          required
         />
-        <input 
+
+        <input
           name="email"
+          type="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="Email" 
-          style={inputStyle} 
-          required 
+          placeholder="Email"
+          style={inputStyle}
+          required
         />
-        <textarea 
+
+        <textarea
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder="Message" 
-          style={{...inputStyle, height: '100px'}} 
-          required 
+          placeholder="Message"
+          style={{ ...inputStyle, height: "100px" }}
+          required
         />
 
-        <button type="submit" disabled={loading} style={{
-          padding: "10px 20px",
-          background: loading ? "#ccc" : "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: loading ? "not-allowed" : "pointer"
-        }}>
-          {loading ? "Sending..." : "Send"}
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            ...buttonStyle,
+            backgroundColor: loading ? "#ccc" : "#007bff",
+            cursor: loading ? "not-allowed" : "pointer",
+          }}
+        >
+          {loading ? "Sending..." : "Send Message"}
         </button>
       </form>
+
+      {status && <p style={{ marginTop: "15px" }}>{status}</p>}
     </div>
   );
 }
+
+const container = {
+  textAlign: "center",
+  padding: "60px 20px",
+};
 
 const inputStyle = {
   display: "block",
   margin: "10px auto",
   padding: "10px",
-  width: "250px",
+  width: "260px",
   borderRadius: "5px",
-  border: "1px solid #ccc"
+  border: "1px solid #ccc",
+};
+
+const buttonStyle = {
+  padding: "10px 20px",
+  color: "white",
+  border: "none",
+  borderRadius: "5px",
 };
 
 export default Contact;
