@@ -36,7 +36,7 @@ function Contact() {
       );
 
       // ✅ accept both 200 & 201
-      if (response.status === 200 || response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         setStatus("✅ Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       }
@@ -45,7 +45,7 @@ function Contact() {
       console.error("❌ Axios Error:", error);
 
       if (error.response) {
-        setStatus("❌ Server error: " + error.response.data.message);
+        setStatus("❌ Server error: " + (error.response.data?.message || "Unknown error."));
       } else if (error.request) {
         setStatus("❌ No response from server. Backend may be sleeping.");
       } else {
