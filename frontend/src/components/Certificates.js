@@ -1,34 +1,24 @@
 function Certificates() {
   const data = [
-    { name: "HTML", file: "/certificates/html.pdf" },
-    { name: "CSS", file: "/certificates/css.pdf" },
-    { name: "Java", file: "/certificates/java.pdf" },
-    { name: "Frontend Development", file: "/certificates/frontend.pdf" },
-    { name: "MongoDB", file: "/certificates/mongodb.pdf" },
-    { name: "Node.js", file: "/certificates/nodejs.pdf" },
-    { name: "GitHub", file: "/certificates/github.pdf" }
+    "html", "css", "java",
+    "frontend", "mongodb",
+    "nodejs", "github"
   ];
 
   return (
-    <div className="section fade">
+    <div className="section fade" id="cert">
       <h2>Certificates</h2>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px,1fr))",
-        gap: "20px"
-      }}>
-        
+      <div className="grid">
         {data.map((c, i) => (
-          <div key={i} className="card">
-            <h4>{c.name}</h4>
+          <div className="card" key={i}>
+            <h4>{c.toUpperCase()}</h4>
 
-            <a href={c.file} target="_blank" rel="noreferrer">
-              View Certificate →
+            <a href={`/certificates/${c}.pdf`} target="_blank">
+              <button className="btn">View</button>
             </a>
           </div>
         ))}
-
       </div>
     </div>
   );

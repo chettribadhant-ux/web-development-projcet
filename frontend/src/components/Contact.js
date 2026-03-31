@@ -6,24 +6,19 @@ function Contact() {
 
   const send = async (e) => {
     e.preventDefault();
-
-    try {
-      await axios.post("https://web-development-projcet.onrender.com/contact");
-      setSuccess(true);
-    } catch {
-      alert("Server error");
-    }
+    await axios.post("https://web-development-project.onrender.com/contact");
+    setSuccess(true);
   };
 
   return (
-    <div className="section fade" style={{ textAlign: "center" }}>
-      
+    <div className="section fade" id="contact">
+
       {!success ? (
-        <div className="card" style={{ maxWidth: "400px", margin: "auto" }}>
-          <h2>Share your thoughts</h2>
+        <div className="card">
+          <h2>Share Your Thoughts</h2>
 
           <form onSubmit={send}>
-            <input placeholder="Mr/Mrs Name" /><br/><br/>
+            <input placeholder="Name" /><br/><br/>
             <input placeholder="Email" /><br/><br/>
             <textarea placeholder="Message" /><br/><br/>
 
@@ -31,9 +26,10 @@ function Contact() {
           </form>
         </div>
       ) : (
-        <h2 style={{ marginTop: "100px" }}>
-          Message sent! Thanks for your idea 😊
-        </h2>
+        <div className="popup">
+          <h2>✨ Message Sent</h2>
+          <p>Thanks for your idea 😊</p>
+        </div>
       )}
 
     </div>

@@ -1,13 +1,14 @@
 function Navbar() {
   return (
-    <div style={{
-      background: "#cce7ff",
-      padding: "15px",
-      textAlign: "center",
-      position: "sticky",
-      top: 0
-    }}>
-      Home | Courses | Skills | Contact
+    <div className="navbar">
+      <h3>Portfolio</h3>
+
+      <div>
+        <a href="#home">Home</a>
+        <a href="#cert">Certificates</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
   );
 }

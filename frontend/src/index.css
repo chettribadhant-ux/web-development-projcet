@@ -1,81 +1,72 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #050505;
-  color: white;
 }
 
-/* section spacing */
-.section {
-  padding: 80px 10%;
-}
-
-/* navbar */
-.navbar {
+/* MAIN SPLIT */
+.container {
   display: flex;
-  justify-content: space-between;
-  padding: 15px 10%;
-  background: black;
-  border-bottom: 1px solid #b026ff;
+  min-height: 100vh;
 }
 
-.navbar a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
-}
-
-/* floating card */
-.card {
-  background: #111;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #b026ff55;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 25px #b026ff;
-}
-
-/* headings glow */
-h1, h2 {
-  text-shadow: 0 0 8px #b026ff;
-}
-
-/* profile image */
-.profile {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 3px solid #b026ff;
-}
-
-/* button */
-.btn {
-  border: 1px solid #b026ff;
-  background: transparent;
-  color: white;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: #b026ff;
+/* LEFT (WHITE) */
+.left {
+  width: 60%;
+  background: #ffffff;
+  padding: 40px;
   color: black;
 }
 
-/* animation */
-.fade {
-  opacity: 0;
-  transform: translateY(40px);
-  animation: fadeUp 1s ease forwards;
+/* RIGHT (BROWN) */
+.right {
+  width: 40%;
+  background: #5a3e2b;
+  color: white;
+  padding: 40px;
+  text-align: center;
 }
 
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* PROFILE */
+.profile {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-top: 40px;
+}
+
+/* CARDS */
+.card {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* BROWN CARDS */
+.card-dark {
+  background: #6b4b34;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* CONTACT */
+.contact-box {
+  background: black;
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+input, textarea {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 20px;
+  background: #5a3e2b;
+  color: white;
+  border: none;
 }
