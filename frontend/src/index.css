@@ -1,20 +1,81 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #0f172a;
+  font-family: Arial, sans-serif;
+  background: #050505;
   color: white;
 }
 
-a {
+/* section spacing */
+.section {
+  padding: 80px 10%;
+}
+
+/* navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 10%;
+  background: black;
+  border-bottom: 1px solid #b026ff;
+}
+
+.navbar a {
+  color: white;
   text-decoration: none;
+  margin: 0 10px;
+}
+
+/* floating card */
+.card {
+  background: #111;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #b026ff55;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 25px #b026ff;
+}
+
+/* headings glow */
+h1, h2 {
+  text-shadow: 0 0 8px #b026ff;
+}
+
+/* profile image */
+.profile {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #b026ff;
+}
+
+/* button */
+.btn {
+  border: 1px solid #b026ff;
+  background: transparent;
   color: white;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
-section {
-  padding: 80px 20px;
+.btn:hover {
+  background: #b026ff;
+  color: black;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
+/* animation */
+.fade {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

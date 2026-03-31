@@ -1,15 +1,20 @@
 function Skills() {
-  const skills = ["HTML", "CSS", "JavaScript", "React", "Node.js"];
+  const skills = [
+    "HTML", "CSS", "JavaScript",
+    "React", "Node.js", "MongoDB",
+    "Git", "UI Design"
+  ];
 
   return (
-    <section className="section">
+    <div className="section fade">
       <h2>Skills</h2>
-      <div className="grid">
+
+      <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
         {skills.map((s, i) => (
           <div key={i} className="card">{s}</div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 

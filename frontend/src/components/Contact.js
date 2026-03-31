@@ -1,133 +1,43 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [success, setSuccess] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
+  const send = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setStatus("");
 
     try {
-      const response = await axios.post(
-        "https://web-development-projcet.onrender.com/contact",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          timeout: 30000, // ✅ increased timeout
-        }
-      );
-
-      // ✅ accept both 200 & 201
-      if (response.status === 200 || response.status === 201) {
-        setStatus("✅ Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" });
-      }
-
-    } catch (error) {
-      console.error("❌ Axios Error:", error);
-
-      if (error.response) {
-        setStatus("❌ Server error: " + (error.response.data?.message || "Unknown error."));
-      } else if (error.request) {
-        setStatus("❌ No response from server. Backend may be sleeping.");
-      } else {
-        setStatus("❌ Error: " + error.message);
-      }
-
-    } finally {
-      setLoading(false);
+      await axios.post("https://web-development-projcet.onrender.com/contact");
+      setSuccess(true);
+    } catch {
+      alert("Server error");
     }
   };
 
   return (
-    <div style={container}>
-      <h2>Contact Me</h2>
+    <div className="section fade" style={{ textAlign: "center" }}>
+      
+      {!success ? (
+        <div className="card" style={{ maxWidth: "400px", margin: "auto" }}>
+          <h2>Share your thoughts</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Name"
-          style={inputStyle}
-          required
-        />
+          <form onSubmit={send}>
+            <input placeholder="Mr/Mrs Name" /><br/><br/>
+            <input placeholder="Email" /><br/><br/>
+            <textarea placeholder="Message" /><br/><br/>
 
-        <input
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email"
-          style={inputStyle}
-          required
-        />
+            <button className="btn">Send</button>
+          </form>
+        </div>
+      ) : (
+        <h2 style={{ marginTop: "100px" }}>
+          Message sent! Thanks for your idea 😊
+        </h2>
+      )}
 
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          placeholder="Message"
-          style={{ ...inputStyle, height: "100px" }}
-          required
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            ...buttonStyle,
-            backgroundColor: loading ? "#ccc" : "#007bff",
-            cursor: loading ? "not-allowed" : "pointer",
-          }}
-        >
-          {loading ? "Sending..." : "Send Message"}
-        </button>
-      </form>
-
-      {status && <p style={{ marginTop: "15px" }}>{status}</p>}
     </div>
   );
 }
 
-const container = {
-  textAlign: "center",
-  padding: "60px 20px",
-};
-
-const inputStyle = {
-  display: "block",
-  margin: "10px auto",
-  padding: "10px",
-  width: "260px",
-  borderRadius: "5px",
-  border: "1px solid #ccc",
-};
-
-const buttonStyle = {
-  padding: "10px 20px",
-  color: "white",
-  border: "none",
-  borderRadius: "5px",
-};
-
 export default Contact;
-

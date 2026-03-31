@@ -1,19 +1,16 @@
 function Courses() {
-  const courses = [
-    "Full Stack Development",
-    "React Basics",
-    "JavaScript Advanced"
-  ];
+  const courses = ["Java", "Python", "C", "C++", "MySQL"];
 
   return (
-    <section className="section">
+    <div className="section fade">
       <h2>Courses Completed</h2>
-      <div className="grid">
+
+      <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
         {courses.map((c, i) => (
           <div key={i} className="card">{c}</div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 

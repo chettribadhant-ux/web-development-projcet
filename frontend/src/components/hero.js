@@ -1,36 +1,14 @@
-import "./hero.css";
-
-function hero() {
+function Hero() {
   return (
-    <div id="home" className="hero-container">
+    <div className="section fade" style={{ textAlign: "center" }}>
+      
+      <img src="/profile.jpg" className="profile" />
 
-      {/* LEFT SIDE TEXT */}
-      <div className="hero-left">
-        <h1 className="hero-title">
-          WEB DEVELOPMENT PROJECT
-        </h1>
-
-        <p className="hero-subtitle">
-          I am a passionate Full Stack Developer building modern web applications.
-        </p>
-      </div>
-
-      {/* RIGHT SIDE IMAGE */}
-      <div className="hero-right">
-        <img
-          src="/profile.jpg"
-          alt="Profile"
-          className="hero-image"
-        />
-      </div>
+      <h1>Hi, I'm Badhant Chettri</h1>
+      <p>Programmer | Learner | Student</p>
 
     </div>
   );
 }
 
-export default hero;
-
-
-
-
-
+export default Hero;
