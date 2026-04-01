@@ -1,0 +1,66 @@
+name: CI/CD → Deploy to Render
+
+on:
+  push:
+    branches:
+      - main        # triggers on every push to main
+
+jobs:
+  # ─────────────────────────────────────────
+  # JOB 1: Test backend before deploying
+  # ─────────────────────────────────────────
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json  # adjust path if needed
+
+      - name: Install dependencies
+        working-directory: ./backend   # ← change to your backend folder name
+        run: npm install
+
+      # Add your test command here if you have tests
+      # - name: Run tests
+      #   working-directory: ./backend
+      #   run: npm test
+
+      - name: Check for syntax errors
+        working-directory: ./backend   # ← change to your backend folder name
+        run: node --check server.js
+
+  # ─────────────────────────────────────────
+  # JOB 2: Deploy backend to Render
+  # ─────────────────────────────────────────
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    needs: test-backend      # only runs if test-backend passes
+
+    steps:
+      - name: Trigger Render backend deploy
+        run: |
+          curl -s --fail -X POST "${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}"
+          echo "✅ Backend deploy triggered"
+
+  # ─────────────────────────────────────────
+  # JOB 3: Deploy frontend to Render
+  # ─────────────────────────────────────────
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: test-backend      # waits for backend test to pass
+
+    steps:
+      - name: Trigger Render frontend deploy
+        run: |
+          curl -s --fail -X POST "${{ secrets.RENDER_FRONTEND_DEPLOY_HOOK }}"
+          echo "✅ Frontend deploy triggered"
