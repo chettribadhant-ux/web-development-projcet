@@ -31,7 +31,7 @@ function App() {
 
           <h1>About Me</h1>
           <p>
-            I am an aspiring web developer, learner and student.
+            I am a web developer, learner and student.
             I enjoy building modern websites and learning new technologies.
           </p>
 
