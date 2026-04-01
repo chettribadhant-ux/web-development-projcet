@@ -32,7 +32,7 @@ function App() {
           <h1>About Me</h1>
           <p>
             I am a web developer, learner and student.
-            I enjoy building vintage websites and learning new technologies.
+            I enjoy building a websites and learning new technologies.
           </p>
 
           {/* Certificates */}
