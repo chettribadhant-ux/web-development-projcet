@@ -44,7 +44,7 @@ body {
 
 /* BROWN CARDS */
 .card-dark {
-  background: #6b4b34;
+  background: #160900;
   padding: 15px;
   border-radius: 10px;
   margin-top: 15px;
@@ -52,7 +52,7 @@ body {
 
 /* CONTACT */
 .contact-box {
-  background: black;
+  background: rgb(250, 192, 3);
   color: white;
   padding: 30px;
   text-align: center;
