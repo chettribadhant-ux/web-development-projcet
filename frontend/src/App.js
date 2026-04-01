@@ -5,11 +5,20 @@ import "./index.css";
 function App() {
 
   const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const send = async (e) => {
     e.preventDefault();
-    await axios.post("https://web-development-projcet.onrender.com/contact");
-    setSuccess(true);
+    try {
+      await axios.post("https://web-development-projcet.onrender.com/contact", formData);
+      setSuccess(true);
+    } catch (error) {
+      console.error("Failed to send:", error);
+    }
   };
 
   return (
@@ -86,11 +95,26 @@ function App() {
             <h2>What's on your mind?</h2>
 
             <form onSubmit={send}>
-              <input placeholder="Name" /><br/>
-              <input placeholder="Email" /><br/>
-              <textarea placeholder="Message" /><br/>
+              <input
+                placeholder="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              /><br/>
+              <input
+                placeholder="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              /><br/>
+              <textarea
+                placeholder="Message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+              /><br/>
 
-              <button>Send</button>
+              <button type="submit">Send</button>
             </form>
           </>
         ) : (
